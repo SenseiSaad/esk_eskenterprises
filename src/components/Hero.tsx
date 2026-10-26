@@ -7,15 +7,19 @@ import { gsap } from "@/lib/gsap";
 import { useSiteReady } from "./SiteReadyContext";
 import { useSplitTextReveal } from "@/hooks/useSplitTextReveal";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { properties } from "@/lib/images";
+import { photos } from "@/lib/images";
+import { SITE, waLink, DEFAULT_WA_MESSAGE } from "@/lib/site";
 import Button from "./Button";
 import HeroScene from "./HeroScene";
+import QuickEnquiry from "./QuickEnquiry";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const imageWrapRef = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const enquiryRef = useRef<HTMLDivElement>(null);
   const { isReady } = useSiteReady();
   const isMobile = useIsMobile();
 
@@ -30,12 +34,12 @@ export default function Hero() {
   useGSAP(
     () => {
       if (!isReady) return;
-      gsap.from([subRef.current, ctaRef.current], {
+      gsap.from([subRef.current, ctaRef.current, enquiryRef.current], {
         y: 24,
         opacity: 0,
         duration: 0.9,
         stagger: 0.15,
-        delay: 0.9,
+        delay: 0.7,
         ease: "power3.out",
       });
     },
@@ -64,49 +68,57 @@ export default function Hero() {
     <section
       id="top"
       ref={sectionRef}
-      className="relative flex h-svh min-h-160 w-full items-end overflow-hidden"
+      className="relative flex min-h-svh w-full items-end overflow-hidden"
     >
       <div ref={imageWrapRef} className="absolute inset-0 -z-10 scale-[1.06]">
         <Image
-          src={properties.villaCotedazur.src}
-          alt={properties.villaCotedazur.alt}
+          src={photos.hero.src}
+          alt={photos.hero.alt}
           fill
           priority
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/30 to-ink/10" />
+        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/55 to-ink/20" />
+        <div className="absolute inset-x-0 top-0 h-44 bg-linear-to-b from-ink/75 to-transparent" />
       </div>
 
       {!isMobile && (
-        <div className="pointer-events-none absolute right-[6vw] top-[16vh] hidden h-[38vh] w-[38vh] max-w-md md:block">
+        <div className="pointer-events-none absolute right-[6vw] top-[16vh] hidden h-[34vh] w-[34vh] max-w-md md:block">
           <HeroScene />
         </div>
       )}
 
-      <div className="flex w-full flex-col gap-8 px-gutter pb-24 pt-40 md:pb-32">
+      <div className="flex w-full flex-col gap-7 px-gutter pb-16 pt-36 md:pb-20">
         <p className="text-xs uppercase tracking-wide2 text-gold">
-          Agence immobilière de prestige
+          Property dealers in Lahore, Pakistan
         </p>
         <h1
           ref={titleRef}
-          className="max-w-4xl font-display text-[clamp(2.75rem,7vw,6.5rem)] leading-[0.95] text-ivory"
+          className="max-w-4xl font-display text-[clamp(2.6rem,7vw,6.2rem)] leading-[0.98] text-ivory"
         >
-          Chaque adresse
+          Find your place
           <br />
-          raconte une histoire.
+          in Lahore.
         </h1>
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <p ref={subRef} className="max-w-md text-stone">
-            YourHome sélectionne et accompagne l&apos;acquisition des biens
-            d&apos;exception, villas, penthouses et demeures de caractère
-            avec une exigence de service sur-mesure.
+        <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
+          <p ref={subRef} className="max-w-xl text-stone">
+            Buy, sell or rent plots, houses, apartments and commercial property across
+            Lahore, from DHA, Bahria Town and Gulberg to Johar Town and Manawan. Speak
+            directly with {SITE.agent} on WhatsApp.
           </p>
-          <div ref={ctaRef}>
-            <Button href="#biens" variant="solid">
-              Découvrir nos biens
+          <div ref={ctaRef} className="flex flex-wrap gap-3">
+            <Button href={waLink(DEFAULT_WA_MESSAGE)} variant="solid" external>
+              <WhatsAppIcon className="h-4 w-4" />
+              Chat on WhatsApp
+            </Button>
+            <Button href={`tel:${SITE.phoneTel}`} variant="outline" external>
+              Call {SITE.phoneDisplay}
             </Button>
           </div>
+        </div>
+        <div ref={enquiryRef}>
+          <QuickEnquiry />
         </div>
       </div>
     </section>

@@ -6,6 +6,8 @@ interface ButtonProps {
   children: ReactNode;
   variant?: "solid" | "outline";
   className?: string;
+  /** Opens in a new tab (WhatsApp, mail, phone). */
+  external?: boolean;
 }
 
 export default function Button({
@@ -13,22 +15,41 @@ export default function Button({
   children,
   variant = "outline",
   className = "",
+  external = false,
 }: ButtonProps) {
-  return (
-    <Link
-      href={href}
-      className={`group relative inline-flex items-center gap-3 overflow-hidden rounded-full border px-7 py-3 text-xs font-medium uppercase tracking-wide2 transition-all duration-500 ${
-        variant === "solid"
-          ? "border-gold bg-gold text-ink hover:scale-105 hover:bg-ivory"
-          : "border-gold/40 text-ivory"
-      } ${className}`}
-    >
+  const classes = `group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border px-7 py-3 text-xs font-medium uppercase tracking-wide2 transition-all duration-500 ${
+    variant === "solid"
+      ? "border-gold bg-gold text-ink hover:scale-105 hover:bg-ivory"
+      : "border-gold/40 text-ivory"
+  } ${className}`;
+
+  const inner = (
+    <>
       {variant === "outline" && (
         <span className="absolute inset-0 -z-10 origin-left scale-x-0 bg-gold transition-transform duration-500 ease-premium group-hover:scale-x-100" />
       )}
-      <span className="relative z-10 transition-colors duration-500 group-hover:text-ink">
+      <span className="relative z-10 inline-flex items-center gap-2 transition-colors duration-500 group-hover:text-ink">
         {children}
       </span>
+    </>
+  );
+
+  if (external) {
+    const opensNewTab = /^https?:\/\//.test(href);
+    return (
+      <a
+        href={href}
+        {...(opensNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        className={classes}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={classes}>
+      {inner}
     </Link>
   );
 }

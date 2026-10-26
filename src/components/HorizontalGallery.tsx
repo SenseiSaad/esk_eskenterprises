@@ -4,15 +4,15 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
-import { properties } from "@/lib/images";
+import { photos } from "@/lib/images";
 
 const GALLERY = [
-  properties.villaPiscine,
-  properties.facadePierre,
-  properties.maisonVegetation,
-  properties.villaNuit,
-  properties.architectureLignes,
-  properties.maisonAngle,
+  photos.villaPool,
+  photos.houseWhite,
+  photos.houseWood,
+  photos.houseGlass,
+  photos.houseModern,
+  photos.interiorLux,
 ];
 
 export default function HorizontalGallery() {
@@ -47,8 +47,12 @@ export default function HorizontalGallery() {
   }, []);
 
   return (
-    <section id="galerie" ref={sectionRef} className="relative overflow-hidden">
-      <div className="no-scrollbar flex gap-6 overflow-x-auto px-gutter py-section md:hidden">
+    <section id="gallery" ref={sectionRef} className="relative overflow-hidden">
+      <div className="px-gutter pt-section md:hidden">
+        <p className="text-xs uppercase tracking-wide2 text-gold">Gallery</p>
+        <h2 className="mt-3 font-display text-4xl">Homes we deal in</h2>
+      </div>
+      <div className="no-scrollbar flex gap-6 overflow-x-auto px-gutter py-10 md:hidden">
         {GALLERY.map((image) => (
           <div
             key={image.src}
@@ -64,17 +68,24 @@ export default function HorizontalGallery() {
           </div>
         ))}
       </div>
+      <p className="px-gutter pb-section text-xs text-stone md:hidden">
+        Photos are for illustration of the property types we deal in.
+      </p>
 
       <div
         ref={trackRef}
         className="hidden h-screen w-max items-center gap-10 px-gutter md:flex"
       >
         <div className="flex h-full max-w-md flex-none flex-col justify-center gap-6 pr-10">
-          <p className="text-xs uppercase tracking-wide2 text-gold">Galerie</p>
-          <h2 className="font-display text-5xl">Un patrimoine d&apos;exception</h2>
+          <p className="text-xs uppercase tracking-wide2 text-gold">Gallery</p>
+          <h2 className="font-display text-5xl">Homes we deal in</h2>
           <p className="text-stone">
-            Faites défiler pour parcourir une sélection de biens
-            représentatifs du savoir-faire YourHome.
+            Scroll to see the kind of houses, villas and interiors our clients buy, sell and
+            rent across Lahore.
+          </p>
+          <p className="text-xs text-stone">
+            Photos are for illustration of the property types we deal in. Ask us for current
+            available listings.
           </p>
         </div>
         {GALLERY.map((image) => (

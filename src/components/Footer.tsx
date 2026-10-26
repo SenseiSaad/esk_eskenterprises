@@ -1,21 +1,23 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { lahore } from "@/lib/images";
+import { SITE, waLink, DEFAULT_WA_MESSAGE } from "@/lib/site";
 
 const FOOTER_LINKS = {
-  Explorer: [
-    { href: "#biens", label: "Biens à la une" },
-    { href: "#galerie", label: "Galerie" },
-    { href: "#pourquoi", label: "Pourquoi YourHome" },
+  Explore: [
+    { href: "#services", label: "What we deal in" },
+    { href: "#societies", label: "Societies we cover" },
+    { href: "#sizes", label: "Marla & Kanal sizes" },
+    { href: "#gallery", label: "Gallery" },
   ],
-  Agence: [
-    { href: "#agence", label: "Notre équipe" },
-    { href: "#temoignages", label: "Témoignages" },
+  Company: [
+    { href: "#about", label: "About" },
+    { href: "#process", label: "How it works" },
+    { href: "#faq", label: "FAQ" },
     { href: "#contact", label: "Contact" },
   ],
 };
-
-const SOCIALS = ["Instagram", "LinkedIn", "Pinterest"];
 
 export default function Footer() {
   const footerRef = useScrollReveal<HTMLElement>();
@@ -23,16 +25,16 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="border-t border-white/10 px-gutter pb-10 pt-section"
+      className="border-t border-white/10 px-gutter pb-28 pt-section md:pb-10"
     >
-      <div className="grid gap-16 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="grid gap-16 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div className="flex flex-col gap-6" data-reveal>
           <span className="font-display text-3xl">
-            Your<span className="text-gold">Home</span>
+            <span className="text-gold">ESK</span> Properties
           </span>
           <p className="max-w-xs text-stone">
-            L&apos;immobilier de prestige, pensé comme une expérience de la
-            première visite à la remise des clés.
+            Property dealers in Lahore. Buying, selling and renting plots, houses, apartments
+            and commercial property.
           </p>
         </div>
 
@@ -53,22 +55,77 @@ export default function Footer() {
             </ul>
           </div>
         ))}
+
+        <div data-reveal className="flex flex-col gap-4">
+          <h3 className="text-xs uppercase tracking-wide2 text-gold">Get in touch</h3>
+          <ul className="flex flex-col gap-3 text-sm text-ivory">
+            <li>{SITE.agent}</li>
+            <li>
+              <a
+                href={waLink(DEFAULT_WA_MESSAGE)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-gold"
+              >
+                WhatsApp {SITE.phoneDisplay}
+              </a>
+            </li>
+            <li>
+              <a href={`tel:${SITE.phoneTel}`} className="transition-colors hover:text-gold">
+                Call {SITE.phoneDisplay}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`mailto:${SITE.email}`}
+                className="break-all transition-colors hover:text-gold"
+              >
+                {SITE.email}
+              </a>
+            </li>
+            <li className="text-stone">Lahore, Pakistan</li>
+          </ul>
+        </div>
       </div>
 
       <div
         data-reveal
-        className="mt-20 flex flex-col gap-6 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between"
+        className="mt-20 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-stone"
       >
-        <p className="text-xs text-stone">
-          © {new Date().getFullYear()} YourHome. Tous droits réservés.
+        <p>
+          © {new Date().getFullYear()} {SITE.name}. All rights reserved. Property photos are
+          for illustration and are not listings.
         </p>
-        <div className="flex gap-6">
-          {SOCIALS.map((social) => (
-            <a key={social} href="#" className="nav-hover-btn text-xs">
-              {social}
-            </a>
-          ))}
-        </div>
+        <p>
+          Photo credits: house and interior photos from Unsplash. Lahore photos from
+          Wikimedia Commons, licensed CC BY-SA 4.0:{" "}
+          <a
+            href={lahore.badshahi.page}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-gold"
+          >
+            &ldquo;{lahore.badshahi.title}&rdquo; by {lahore.badshahi.credit}
+          </a>
+          ,{" "}
+          <a
+            href={lahore.arfa.page}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-gold"
+          >
+            &ldquo;{lahore.arfa.title}&rdquo; by {lahore.arfa.credit}
+          </a>
+          .{" "}
+          <a
+            href="https://creativecommons.org/licenses/by-sa/4.0/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-gold"
+          >
+            CC BY-SA 4.0
+          </a>
+        </p>
       </div>
     </footer>
   );

@@ -6,13 +6,15 @@ import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useSiteReady } from "./SiteReadyContext";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { SITE, waLink, DEFAULT_WA_MESSAGE } from "@/lib/site";
 import Button from "./Button";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 const NAV_LINKS = [
-  { href: "#biens", label: "Biens" },
-  { href: "#agence", label: "Agence" },
-  { href: "#galerie", label: "Galerie" },
-  { href: "#temoignages", label: "Témoignages" },
+  { href: "#services", label: "Services" },
+  { href: "#societies", label: "Societies" },
+  { href: "#sizes", label: "Plot Sizes" },
+  { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -79,7 +81,8 @@ export default function Navbar() {
     if (!menuOverlayRef.current) return;
     const links = menuLinksRef.current.filter((el): el is HTMLAnchorElement => Boolean(el));
 
-    const tl = gsap.timeline({ paused: true })
+    const tl = gsap
+      .timeline({ paused: true })
       .fromTo(
         menuOverlayRef.current,
         { autoAlpha: 0 },
@@ -137,90 +140,93 @@ export default function Navbar() {
 
   return (
     <>
-    <header
-      ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-gutter py-5 transition-colors"
-    >
-      <Link
-        href="#top"
-        className="font-display text-xl tracking-tight text-ivory transition-opacity duration-300 hover:opacity-70"
+      <header
+        ref={navRef}
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-gutter py-5 transition-colors"
       >
-        Your<span className="text-gold">Home</span>
-      </Link>
+        <Link
+          href="#top"
+          aria-label={`${SITE.name} home`}
+          className="font-display text-xl tracking-tight text-ivory transition-opacity duration-300 hover:opacity-70"
+        >
+          <span className="text-gold">ESK</span> Properties
+        </Link>
 
-      <nav className="hidden items-center gap-10 md:flex">
-        {NAV_LINKS.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            className={`nav-hover-btn ${activeHref === link.href ? "is-active" : ""}`}
-          >
-            {link.label}
-          </a>
-        ))}
-      </nav>
+        <nav className="hidden items-center gap-10 md:flex" aria-label="Main">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={`nav-hover-btn ${activeHref === link.href ? "is-active" : ""}`}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
 
-      <div className="hidden md:block">
-        <Button href="#contact" variant="outline">
-          Prendre rendez-vous
-        </Button>
-      </div>
+        <div className="hidden md:block">
+          <Button href={waLink(DEFAULT_WA_MESSAGE)} variant="outline" external>
+            <WhatsAppIcon className="h-4 w-4" />
+            WhatsApp us
+          </Button>
+        </div>
 
-      <button
-        type="button"
-        aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-        aria-expanded={isMenuOpen}
-        onClick={() => setIsMenuOpen((open) => !open)}
-        className="relative z-50 flex flex-col gap-1.5 transition-transform duration-300 ease-premium active:scale-90 md:hidden"
-      >
-        <span
-          className={`h-px w-7 bg-ivory transition-transform duration-500 ease-premium ${
-            isMenuOpen ? "translate-y-2 rotate-45" : ""
-          }`}
-        />
-        <span
-          className={`h-px w-7 bg-ivory transition-opacity duration-300 ease-premium ${
-            isMenuOpen ? "opacity-0" : "opacity-100"
-          }`}
-        />
-        <span
-          className={`h-px w-7 bg-ivory transition-transform duration-500 ease-premium ${
-            isMenuOpen ? "-translate-y-2 -rotate-45" : ""
-          }`}
-        />
-      </button>
-    </header>
-
-    <div
-      ref={menuOverlayRef}
-      className="invisible fixed inset-0 z-40 flex flex-col items-center justify-center gap-4 bg-ink/98 backdrop-blur-lg opacity-0 md:hidden"
-    >
-      <nav className="flex flex-col items-center gap-4">
-        {NAV_LINKS.map((link, index) => (
-          <a
-            key={link.href}
-            ref={(el) => {
-              menuLinksRef.current[index] = el;
-            }}
-            href={link.href}
-            onClick={closeMenu}
-            className={`flex items-baseline gap-3 font-display text-4xl transition-colors duration-300 ${
-              activeHref === link.href ? "text-gold" : "text-ivory active:text-gold"
+        <button
+          type="button"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((open) => !open)}
+          className="relative z-50 flex flex-col gap-1.5 p-2 transition-transform duration-300 ease-premium active:scale-90 md:hidden"
+        >
+          <span
+            className={`h-px w-7 bg-ivory transition-transform duration-500 ease-premium ${
+              isMenuOpen ? "translate-y-2 rotate-45" : ""
             }`}
-          >
-            <span className="font-sans text-xs tracking-wide2 text-gold/60">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            {link.label}
-          </a>
-        ))}
-      </nav>
-      <div ref={menuCtaRef} onClick={closeMenu} className="mt-6">
-        <Button href="#contact" variant="solid">
-          Prendre rendez-vous
-        </Button>
+          />
+          <span
+            className={`h-px w-7 bg-ivory transition-opacity duration-300 ease-premium ${
+              isMenuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`h-px w-7 bg-ivory transition-transform duration-500 ease-premium ${
+              isMenuOpen ? "-translate-y-2 -rotate-45" : ""
+            }`}
+          />
+        </button>
+      </header>
+
+      <div
+        ref={menuOverlayRef}
+        className="invisible fixed inset-0 z-40 flex flex-col items-center justify-center gap-4 bg-ink/98 opacity-0 backdrop-blur-lg md:hidden"
+      >
+        <nav className="flex flex-col items-center gap-4" aria-label="Mobile">
+          {NAV_LINKS.map((link, index) => (
+            <a
+              key={link.href}
+              ref={(el) => {
+                menuLinksRef.current[index] = el;
+              }}
+              href={link.href}
+              onClick={closeMenu}
+              className={`flex items-baseline gap-3 font-display text-4xl transition-colors duration-300 ${
+                activeHref === link.href ? "text-gold" : "text-ivory active:text-gold"
+              }`}
+            >
+              <span className="font-sans text-xs tracking-wide2 text-gold/60">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <div ref={menuCtaRef} onClick={closeMenu} className="mt-6">
+          <Button href={waLink(DEFAULT_WA_MESSAGE)} variant="solid" external>
+            <WhatsAppIcon className="h-4 w-4" />
+            WhatsApp us
+          </Button>
+        </div>
       </div>
-    </div>
     </>
   );
 }

@@ -1,13 +1,17 @@
 import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import FeaturedProperties from "@/components/FeaturedProperties";
-import WhyYourHome from "@/components/WhyYourHome";
+import Services from "@/components/Services";
+import Societies from "@/components/Societies";
+import PlotSizes from "@/components/PlotSizes";
 import HorizontalGallery from "@/components/HorizontalGallery";
-import Agency from "@/components/Agency";
-import Testimonials from "@/components/Testimonials";
+import LahoreBand from "@/components/LahoreBand";
+import WhyESK from "@/components/WhyESK";
+import About from "@/components/About";
+import Process from "@/components/Process";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { SiteReadyProvider } from "@/components/SiteReadyContext";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
@@ -19,14 +23,18 @@ export default function Home() {
         <Navbar />
         <main>
           <Hero />
-          <FeaturedProperties />
-          <WhyYourHome />
+          <Services />
+          <Societies />
+          <PlotSizes />
           <HorizontalGallery />
-          <Agency />
-          <Testimonials />
+          <LahoreBand />
+          <WhyESK />
+          <About />
+          <Process />
           <Contact />
         </main>
         <Footer />
+        <WhatsAppFloat />
       </SmoothScrollProvider>
     </SiteReadyProvider>
   );

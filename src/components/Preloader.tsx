@@ -40,8 +40,9 @@ export default function Preloader() {
       });
 
       if (prefersReducedMotion) {
-        tl.set(leftPanelRef.current, { xPercent: -100 })
-          .set(rightPanelRef.current, { xPercent: 100 });
+        tl.set(leftPanelRef.current, { xPercent: -100 }).set(rightPanelRef.current, {
+          xPercent: 100,
+        });
         return;
       }
 
@@ -55,7 +56,7 @@ export default function Preloader() {
           counter,
           {
             value: 100,
-            duration: 1.5,
+            duration: 1.3,
             ease: "power2.inOut",
             onUpdate: () => {
               if (counterRef.current) {
@@ -65,7 +66,7 @@ export default function Preloader() {
           },
           "-=0.3"
         )
-        .to(barRef.current, { scaleX: 1, duration: 1.5, ease: "power2.inOut" }, "<")
+        .to(barRef.current, { scaleX: 1, duration: 1.3, ease: "power2.inOut" }, "<")
         .to(logoRef.current, { opacity: 0, y: -16, duration: 0.5 }, "-=0.2")
         .to(
           leftPanelRef.current,
@@ -97,10 +98,10 @@ export default function Preloader() {
         className="absolute inset-0 flex flex-col items-center justify-center gap-6"
       >
         <span className="text-[0.65rem] uppercase tracking-wide2 text-gold">
-          Agence immobilière de prestige
+          Property dealers in Lahore
         </span>
         <span className="font-display text-4xl tracking-tight text-ivory md:text-5xl">
-          Your<span className="text-gold">Home</span>
+          <span className="text-gold">ESK</span> Properties
         </span>
         <div className="flex items-center gap-4">
           <div className="h-px w-40 overflow-hidden bg-white/10 md:w-56">
